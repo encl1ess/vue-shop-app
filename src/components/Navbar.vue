@@ -7,17 +7,17 @@
                 <ul class="menu">
                     <li>
                         <a href="#profile">
-                            <icon-button class="profile-icon"></icon-button>
+                            <icon-button class="profile-icon"/>
                         </a>
                     </li>
                     <li>
                         <a href="#favourites">
-                            <icon-button class="favourites-icon"></icon-button>
+                            <icon-button class="favourites-icon"/>
                         </a>
                     </li>
                     <li>
                         <a href="#cart">
-                            <icon-button class="cart-icon"></icon-button>
+                            <icon-button class="cart-icon"/>
                         </a>
                     </li>
 

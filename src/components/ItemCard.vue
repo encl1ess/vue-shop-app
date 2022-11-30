@@ -17,9 +17,7 @@
                 <div class="card-vendor">Арт. {{ item.vendor }}</div>
                 <div class="reviews">
                     <label>Отзывы</label>
-                    <div class="rating">
-                        ★★★★☆
-                    </div>
+                    <star-rating :rating="4"/>
                     <div>14 отзывов </div>
                     <icon-button class="arrow-icon" />
                 </div>
@@ -41,10 +39,14 @@
                     </row-container>
                 </column-container>
                 <column-container class="size-info">
+                    <custom-select :options="sizes"/>
+                    <custom-link>Определить размер</custom-link>
                 </column-container>
                 <column-container class="buy-info">
-                    <row-container>
-
+                    <row-container class="buttons-wrapper">
+                        <number-input/>
+                        <custom-button class="add-to-cart dark">Добавить в корзину</custom-button>
+                        <custom-button class="dark large-square heart-icon"></custom-button>
                     </row-container>
                     <custom-link> Купить в 1 клик</custom-link>
                 </column-container>
@@ -80,6 +82,12 @@ export default {
             type: Object,
             required: true
         }
+    },
+    data() {
+        return {
+            sizes: ['Выберите размер', 80, 86, 92, 98, 104, 110, 116, 122]
+        }
+
     }
 }
 </script>
@@ -98,11 +106,10 @@ hr {
         margin-right: 1em;
     }
 
-    .rating {
-        margin-right: 0.2em;
+    .star-rating {
+        margin: 0.1em;
     }
 }
-
 
 .arrow-icon {
     mask-image: url("@/assets/icons/arrow.svg");
@@ -122,21 +129,28 @@ hr {
     mask-image: url("@/assets/icons/card.svg");
 
 }
-
+.heart-icon {
+    background: center no-repeat url("@/assets/icons/heart.svg");
+    &:hover {
+        background: center no-repeat url("@/assets/icons/filled-heart.svg");
+        background-color: #333333;
+    }
+}
 
 .card {
     display: flex;
     align-items: flex-start;
     justify-content: center;
     width: 100%;
-    .plate {
-        padding: 0.1em 0.9em;
-    }
     .card-body {
         width: 50%;
 
         &>.column-container {
             margin: 1em 0.5em 1em 2em; //t r b l
+        }
+
+        .card-content .column-container {
+            margin-bottom: 2em;
         }
     }
 
