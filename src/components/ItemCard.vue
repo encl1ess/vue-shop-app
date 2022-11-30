@@ -17,7 +17,7 @@
                 <div class="card-vendor">Арт. {{ item.vendor }}</div>
                 <div class="reviews">
                     <label>Отзывы</label>
-                    <star-rating :rating="4"/>
+                    <star-rating :rating="4" />
                     <div>14 отзывов </div>
                     <icon-button class="arrow-icon" />
                 </div>
@@ -39,12 +39,12 @@
                     </row-container>
                 </column-container>
                 <column-container class="size-info">
-                    <custom-select :options="sizes"/>
+                    <custom-select :options="sizes" />
                     <custom-link>Определить размер</custom-link>
                 </column-container>
                 <column-container class="buy-info">
                     <row-container class="buttons-wrapper">
-                        <number-input/>
+                        <number-input />
                         <custom-button class="add-to-cart dark">Добавить в корзину</custom-button>
                         <custom-button class="dark large-square heart-icon"></custom-button>
                     </row-container>
@@ -71,7 +71,7 @@
             </column-container>
         </column-container>
     </article>
-    
+
 </template>
 
 <script>
@@ -129,8 +129,10 @@ hr {
     mask-image: url("@/assets/icons/card.svg");
 
 }
+
 .heart-icon {
     background: center no-repeat url("@/assets/icons/heart.svg");
+
     &:hover {
         background: center no-repeat url("@/assets/icons/filled-heart.svg");
         background-color: #333333;
@@ -142,18 +144,25 @@ hr {
     align-items: flex-start;
     justify-content: center;
     width: 100%;
+
     .card-body {
         width: 50%;
 
         &>.column-container {
             margin: 1em 0.5em 1em 2em; //t r b l
+           
         }
 
         .card-content .column-container {
-            margin-bottom: 2em;
+            margin-bottom: 1em;
         }
     }
-
+    .buttons-wrapper {
+        flex-wrap: wrap;
+        * {
+            margin-top: 1em;
+        }
+    }
     &-title {
         font-weight: 600;
         font-size: 18px;
@@ -185,12 +194,11 @@ hr {
     // object-fit: fill;
     position: relative;
     overflow: hidden;
-
+   
     img {
         width: 100%;
         height: auto;
     }
-
 
     .column-container {
         position: absolute;
@@ -217,6 +225,7 @@ hr {
 
     @media only all and (max-width: 1400px) {
         width: 375px;
+        margin: 0;
 
         .column-container .mini {
             width: 40px;
@@ -241,7 +250,16 @@ hr {
         color: #828282;
         text-decoration: line-through;
     }
-
 }
 
+
+@media only all and (max-width: 685px) {
+    .card {
+        flex-wrap: wrap;
+
+        .card-body {
+            width: 100%;
+        }
+    }
+}
 </style>

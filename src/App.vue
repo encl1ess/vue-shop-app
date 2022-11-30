@@ -91,6 +91,5 @@ ul {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 2em 0;
 }
 </style>
