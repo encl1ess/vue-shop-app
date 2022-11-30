@@ -1,5 +1,4 @@
 <template>
-    <transition name="hide">
         <header class="navbar">
 
             <nav>
@@ -37,9 +36,7 @@
 
                 </row-container>
             </nav>
-
         </header>
-    </transition>
 
 </template>
 
@@ -74,22 +71,21 @@ export default {
                 }
             ]
         }
-    },
-    mounted() {
-        window.addEventListener('scroll', this.onScroll)
-    },
-    methods: {
-        onScroll() {
-            if (window.pageYOffset > 100) {
-
-            }
-        },
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.hide-enter-active, .hide-leave-active {
+  transition: opacity .5s;
+}
+.hide-enter, .hide-leave-to {
+  opacity: 0;
+}
 .navbar {
+    z-index: 100;
+    position: fixed;
+    background: white;
     height: 44px;
     width: 100vw;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);

@@ -1,16 +1,6 @@
 <template>
     <article class='card'>
-        <div class="card-img">
-            <img class="max-img" src="@/assets/items/item1_1.png" />
-            <column-container>
-                <img class="mini" src="@/assets/items/item1_1.png" />
-                <img class="mini" src="@/assets/items/item1_2.png" />
-                <img class="mini" src="@/assets/items/item1_3.png" />
-                <img class="mini" src="@/assets/items/item1_4.png" />
-                <img class="mini" src="@/assets/items/item1_5.png" />
-            </column-container>
-
-        </div>
+        <images-slider class="card-img" :images="item.imgURLs"/>
         <column-container class="card-body">
             <column-container class="card-header">
                 <h3 class="card-title">{{ item.title }}</h3>
@@ -44,10 +34,17 @@
                 </column-container>
                 <column-container class="buy-info">
                     <row-container class="buttons-wrapper">
-                        <number-input />
+                        <number-input @quantity="setItemQuantity" />
                         <custom-button class="add-to-cart dark" @click="addToCart">Добавить в корзину</custom-button>
-                        <custom-button class="dark large-square heart-icon"></custom-button>
+                        <custom-button class="dark large-square heart-icon" @click="addToFavourires"></custom-button>
                     </row-container>
+
+                    <div class="message" v-show="(messageShow === true)">
+                        Товар '{{ addedItem.name }}' в количестве {{ addedItem.quantity }} добавлен в {{
+        addedItem.directory
+                        }}
+                    </div>
+
                     <custom-link> Купить в 1 клик</custom-link>
                 </column-container>
                 <hr>
@@ -75,8 +72,9 @@
 </template>
 
 <script>
-
+import getURLMixin from "@/mixins/getURLMixin"
 export default {
+    mixins: [getURLMixin],
     props: {
         item: {
             type: Object,
@@ -86,14 +84,47 @@ export default {
     data() {
         return {
             sizes: ['Выберите размер', 80, 86, 92, 98, 104, 110, 116, 122],
-            itemQuantity: 0
+            itemQuantity: 1,
+            addedItem: {
+                name: "",
+                quantity: 1,
+                directory: ""
+            },
+            messageShow: {
+                type: Boolean,
+                default: false
+            },
+            selectedImg: ""
         }
 
+    },
+    methods: {
+        setItemQuantity(quantity) {
+            this.itemQuantity = quantity;
+        },
+        addToCart() {
+            this.addedItem.quantity = this.itemQuantity;
+            this.addedItem.name = this.item.title;
+            this.addedItem.directory = "корзину";
+            this.messageShow = true;
+        },
+        addToFavourires() {
+            this.addedItem.quantity = this.itemQuantity;
+            this.addedItem.name = this.item.title;
+            this.addedItem.directory = "избранное";
+            this.messageShow = true;
+        }
     }
+
 }
 </script>
 
 <style lang='scss' scoped>
+.message {
+    width: 30rem;
+    color: orange;
+}
+
 hr {
     border-top: 0.5px solid #C4C4C4;
 }
@@ -190,61 +221,13 @@ hr {
 
 }
 
-
-.card-img {
-    width: 50%;
-    height: auto;
-    max-height: 880px;
-    // object-fit: fill;
-    position: relative;
-    overflow: hidden;
-
-    img {
-        width: 100%;
-        height: auto;
-    }
-
-    .column-container {
-        position: absolute;
-        top: 1.5em;
-        left: 1em;
-        height: inherit;
-        overflow-y: auto;
-
-        &::-webkit-scrollbar {
-            display: none;
-        }
-
-        .mini {
-            margin-bottom: 0.6em;
-            width: 70px;
-            height: 90px;
-            object-fit: cover;
-
-            &:hover {
-                transform: scale(1.1);
-            }
-        }
-    }
-
-    @media only all and (max-width: 1400px) {
-        width: 375px;
-        margin: 0;
-
-        .column-container .mini {
-            width: 40px;
-            height: 52px;
-        }
-    }
-
-}
-
-
 .price-container {
     letter-spacing: 0.04em;
+
     .rub {
         position: relative;
     }
+
     .price,
     .price .rub {
         font-weight: 700;
@@ -290,7 +273,6 @@ hr {
 @media only all and (max-width: 685px) {
     .card {
         flex-wrap: wrap;
-
         .card-body {
             width: 100%;
         }

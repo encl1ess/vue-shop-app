@@ -1,11 +1,16 @@
 <template>
-    <navbar />
+    <div class="app">
+        <transition name="hide">
+            <navbar v-if="hide" />
+        </transition>
 
-    <column-container class='content'>
-        <item-card :item="items[0]" />
-        <images-container :images="images"/>
-    </column-container>
-    <custom-footer />
+        <column-container class='content'>
+            <item-card :item="items[0]" />
+            <images-container :images="images" />
+        </column-container>
+        <custom-footer />
+    </div>
+
 
 </template>
 
@@ -23,6 +28,10 @@ export default {
     },
     data() {
         return {
+            hide: {
+                type: Boolean,
+                default: false
+            },
             items: [
                 {
                     id: 1,
@@ -33,7 +42,13 @@ export default {
                     sale: 30,
                     stock: 20,
                     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                    imgURLs: ['item1_1', 'item1_2']
+                    imgURLs: [
+                        "item1_1.png",
+                        "item1_2.png",
+                        "item1_3.png",
+                        "item1_4.png",
+                        "item1_5.png"
+                    ]
                 },
                 {
                     id: 2,
@@ -44,18 +59,26 @@ export default {
                     sale: 30,
                     stock: 20,
                     description: 'Tristique et egestas quis ipsum. Nisi scelerisque eu ultrices vitae auctor eu augue. Nulla pharetra diam sit amet nisl suscipit. Dictumst vestibulum rhoncus est pellentesque elit. Maecenas ultricies mi eget mauris. Tempor commodo ullamcorper a lacus vestibulum. Elementum pulvinar etiam non quam lacus suspendisse. Viverra tellus in hac habitasse platea dictumst vestibulum rhoncus. Mi eget mauris pharetra et ultrices neque ornare. Et malesuada fames ac turpis. Congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque.',
+                    imgURLs: [
+                        "item1_1.png",
+                        "item1_2.png",
+                        "item1_3.png",
+                        "item1_4.png",
+                        "item1_5.png"
+                    ]
                 }
             ],
-            images: [ 
+            images: [
                 "item2_1.png",
                 "item3_1.png",
-                'item4_1.png', 
+                'item4_1.png',
                 "item5_1.png",
                 "item6_1.png"
             ]
         }
     }
-   
+
+
 
 
 }
@@ -79,13 +102,15 @@ ul {
     list-style: none;
 }
 
-#app {
+#app,
+.app {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .content {
+    margin-top: 4.5em;
     max-width: 1390px;
     width: 100%;
     display: flex;
