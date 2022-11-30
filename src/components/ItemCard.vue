@@ -25,8 +25,8 @@
             <column-container class="card-content">
                 <column-container class="price-info">
                     <row-container class="price-container">
-                        <div class="price">{{ item.price }} &#8381;</div>
-                        <div class="old-price">{{ item.oldPrice }} &#8381; </div>
+                        <div class="price">{{ item.price }}<span class="rub">Р</span></div>
+                        <div class="old-price">{{ item.oldPrice }}<span class="rub">Р</span> </div>
                         <icon-button class="arrow-icon" />
                     </row-container>
                     <row-container class="sale-container">
@@ -45,7 +45,7 @@
                 <column-container class="buy-info">
                     <row-container class="buttons-wrapper">
                         <number-input />
-                        <custom-button class="add-to-cart dark">Добавить в корзину</custom-button>
+                        <custom-button class="add-to-cart dark" @click="addToCart">Добавить в корзину</custom-button>
                         <custom-button class="dark large-square heart-icon"></custom-button>
                     </row-container>
                     <custom-link> Купить в 1 клик</custom-link>
@@ -85,7 +85,8 @@ export default {
     },
     data() {
         return {
-            sizes: ['Выберите размер', 80, 86, 92, 98, 104, 110, 116, 122]
+            sizes: ['Выберите размер', 80, 86, 92, 98, 104, 110, 116, 122],
+            itemQuantity: 0
         }
 
     }
@@ -150,19 +151,22 @@ hr {
 
         &>.column-container {
             margin: 1em 0.5em 1em 2em; //t r b l
-           
+
         }
 
         .card-content .column-container {
             margin-bottom: 1em;
         }
     }
+
     .buttons-wrapper {
         flex-wrap: wrap;
+
         * {
             margin-top: 1em;
         }
     }
+
     &-title {
         font-weight: 600;
         font-size: 18px;
@@ -194,7 +198,7 @@ hr {
     // object-fit: fill;
     position: relative;
     overflow: hidden;
-   
+
     img {
         width: 100%;
         height: auto;
@@ -238,17 +242,47 @@ hr {
 
 .price-container {
     letter-spacing: 0.04em;
-
-    .price {
+    .rub {
+        position: relative;
+    }
+    .price,
+    .price .rub {
         font-weight: 700;
         font-size: 24px;
         line-height: 24px;
+
     }
 
-    .old-price {
+    .rub:before,
+    .rub:after {
+        content: "";
+        top: 52%;
+        position: absolute;
+        width: 0.4em;
+        border-top: 0.15em solid #333333;
+    }
+
+    .rub:after {
+        top: 65%;
+        right: 40%;
+        // width: 0.4em;
+        border-width: 0.1em;
+
+    }
+
+    .old-price,
+    .old-price .rub {
         font-weight: 400;
         color: #828282;
         text-decoration: line-through;
+    }
+
+    .old-price {
+
+        .rub:before,
+        .rub:after {
+            border-color: #828282;
+        }
     }
 }
 
