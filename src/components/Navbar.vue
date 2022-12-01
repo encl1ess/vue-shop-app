@@ -1,42 +1,37 @@
 <template>
-        <header class="navbar">
-
-            <nav>
-                <a class="logo"></a>
-                <row-container>
-                    <ul class="menu">
-                        <li>
-                            <a href="#profile">
-                                <icon-button class="profile-icon" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#favourites">
-                                <icon-button class="favourites-icon" />
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#cart">
-                                <icon-button class="cart-icon" />
-                            </a>
-                        </li>
-                    </ul>
-                    <transition name="fade">
-                        <icon-button v-if="show" @click="show = !show" key="toggle-menu-btn"
-                            class="menu-icon toggle-menu-btn" />
-                        <icon-button v-else @click="show = !show" class="cross-icon" key="close" />
-                    </transition>
-                    <transition name="fade">
-                        <row-container v-if="!show" class="menu-container">
-                            <custom-link-list class="toggle-menu" :values="menuItems" />
-                        </row-container>
-
-                    </transition>
-
-
+    <header class="navbar" @click="closeMenu">
+        <nav >
+            <a class="logo"></a>
+            <row-container>
+                <ul class="menu">
+                    <li>
+                        <a href="#profile">
+                            <icon-button class="profile-icon" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#favourites">
+                            <icon-button class="favourites-icon" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#cart">
+                            <icon-button class="cart-icon" />
+                        </a>
+                    </li>
+                </ul>
+                <icon-button v-if="!showMenu" @click="(showMenu = !showMenu)" key="toggle-menu-btn"
+                    class="menu-icon toggle-menu-btn" />
+                <icon-button v-else @click="(showMenu = !showMenu)" class="cross-icon" key="close" />
+                <row-container v-if="showMenu" class="menu-container" >
+                    <custom-link-list class="toggle-menu" :values="menuItems" />
                 </row-container>
-            </nav>
-        </header>
+
+
+
+            </row-container>
+        </nav>
+    </header>
 
 </template>
 
@@ -44,14 +39,15 @@
 
 export default {
     name: 'navbar',
+    props: {
+        showMenu: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
-            show: {
-                type: Boolean,
-                default: false
-            }
-            ,
-            menuItems: [
+                menuItems: [
                 {
                     url: "/bedclothes",
                     name: "постельное белье"
@@ -71,17 +67,16 @@ export default {
                 }
             ]
         }
+    },
+    methods: {
+        closeMenu () {
+            this.$emit("update:showMenu", true)
+        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.hide-enter-active, .hide-leave-active {
-  transition: opacity .5s;
-}
-.hide-enter, .hide-leave-to {
-  opacity: 0;
-}
 .navbar {
     z-index: 100;
     position: fixed;
@@ -91,7 +86,6 @@ export default {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
-    transition: top 0.5s;
     margin-bottom: 2em;
 
     .logo {

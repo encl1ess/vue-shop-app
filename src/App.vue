@@ -1,10 +1,10 @@
 <template>
-    <div class="app">
-        <transition name="hide">
-            <navbar v-if="hide" />
+    <div class="app" @wheel="wheelHandler"  >
+        <transition name="show">
+            <navbar v-if="show" v-model:showMenu="isVisible" />
         </transition>
 
-        <column-container class='content'>
+        <column-container class='content' @click="onClick">
             <item-card :item="items[0]" />
             <images-container :images="images" />
         </column-container>
@@ -28,10 +28,11 @@ export default {
     },
     data() {
         return {
-            hide: {
+            show: {
                 type: Boolean,
-                default: false
+                default: true
             },
+            isVisible: false,
             items: [
                 {
                     id: 1,
@@ -76,7 +77,21 @@ export default {
                 "item6_1.png"
             ]
         }
+    },
+    methods: {
+        wheelHandler(event) {
+            if(event.deltaY > 0) {
+                this.show = false;
+            } else {
+                this.show = true;
+            }
+        },
+        onClick() {
+            this.isVisible = false;
+        }
     }
+
+
 
 
 
@@ -86,6 +101,16 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+.show-enter-active,
+.show-leave-active {
+    transition: height 0.2s linear;
+}
+
+.show-enter-from,
+.show-leave-to {
+  height: 0 !important;
+}
+
 
 * {
     margin: 0;
